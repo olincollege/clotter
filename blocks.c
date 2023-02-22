@@ -5,9 +5,11 @@
 
 
 void blocks(float *scale){
-
-    char* whole_block = "\U00002588";
+    // returns a string of length 20 filled with scale many blocks, resolution 1/8.
+    char *whole_block = "\U00002588";
     int b_ = floor(*scale);
+    char output[21-b_];
+    
     for (int i = 0; i< b_; i++){
         printf("%s", whole_block);
     }
@@ -44,6 +46,9 @@ void blocks(float *scale){
             complement = "";
     }
     printf("%s",complement);
+    for (int i = 0; i<20-b_;i++){
+        printf(" ");
+    }
 }
 
 
@@ -57,7 +62,5 @@ void blocks(float *scale){
 //            blocks(&r);
 //            printf("\n");
 //        }
-//
-//
 //        return 0;
 //    }

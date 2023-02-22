@@ -4,13 +4,13 @@
 #include"blocks.c"
 #include"colors.c"
 
-int width =10;
+int num_bars =10;
 int num_colors = 4;
 
 int main(void){
     srand((unsigned int)time(NULL));
     printf("\t\t\U0000250F\n");
-    for (int i = 0;i<width;i++){
+    for (int i = 0;i<num_bars;i++){
         float x = (float)rand()/(float)(RAND_MAX/20);
         printf("%f\t",x);
         printf("\U0000252B");
@@ -38,9 +38,10 @@ int main(void){
                 break;
         }
         blocks(&x);
-        printf(RESET "\n");
+        printf(RESET);
+        printf("\t%f\n",x);
     }
     printf("\t\t\U00002517\n");
-
+    return 0;
 }
 
