@@ -4,11 +4,13 @@
 #include"blocks.c"
 #include"colors.c"
 
-int num_bars =10;
-int num_colors = 4;
+const int num_bars =10;
+const int num_colors = 4;
 
 int main(void){
     srand((unsigned int)time(NULL));
+    printf("Number of colors: %i, Number of bars: %i\n", num_colors,num_bars);
+
     printf("\t\t\U0000250F\n");
     for (int i = 0;i<num_bars;i++){
         float x = (float)rand()/(float)(RAND_MAX/20);
