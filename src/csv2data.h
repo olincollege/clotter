@@ -17,6 +17,6 @@ static const char WHITESPACE[] = " \f\n\r\t\v";
  * .
  * .
  *
- * @param filepath // assuming LINUS for now
+ * @param filepath // assuming LINUX for now
  */
 void csv2arr(char* file_path);
