@@ -51,5 +51,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# build files
+
+# Ignore build directory contents
 build/*
