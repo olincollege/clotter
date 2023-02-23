@@ -1,12 +1,12 @@
 # clotter
 
 
-## display
+## terminal_display
 @lxbtlr
 
-## data input
+## data_input
 @slkaplan
 
 
-## data manipulation 
+## data_manipulation 
 @zbwrm
