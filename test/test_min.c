@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "../src/data_handling.h"
+#include "../src/array_helpers.h"
 
 Test(find_min, descending_array) {
   float numbers[5] = {5, 4, 3, 2, 1};

@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "../src/data_handling.h"
+#include "../src/array_helpers.h"
 
 Test(find_max, ascending_array) {
   float numbers[5] = {1, 2, 3, 4, 5};
