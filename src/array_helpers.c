@@ -28,5 +28,5 @@ float find_mean(const float numbers[], size_t size) {
     sum += numbers[i];
   }
 
-  return sum / (float) size;
+  return sum / (float)size;
 }
