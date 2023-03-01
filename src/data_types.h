@@ -8,13 +8,12 @@ typedef struct{
 }Data;
 
 typedef struct {
-    char name[50];
+    char *name;
     Data nums;
 }Series;
 
 typedef struct {
-    Series *values;
+    Series **values;
     int *numblocks;
-    size_t blength;
-    size_t vlength;
+    size_t length;
 }Count;
