@@ -2,7 +2,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-conversion")
 
 add_executable(test_max test_max.c)
 target_link_libraries(test_max
-  PRIVATE data_handling
+  PRIVATE array_helpers
   PUBLIC ${CRITERION}
 )
 
@@ -13,7 +13,7 @@ add_test(
 
 add_executable(test_min test_min.c)
 target_link_libraries(test_min
-  PRIVATE data_handling
+  PRIVATE array_helpers
   PUBLIC ${CRITERION}
 )
 
@@ -22,13 +22,14 @@ add_test(
   COMMAND test_min ${CRITERION_FLAGS}
 )
 
-add_executable(test_range test_range.c)
-target_link_libraries(test_range
-  PRIVATE data_handling
+add_executable(test_mean test_mean.c)
+target_link_libraries(test_mean
+  PRIVATE array_helpers
   PUBLIC ${CRITERION}
+  m
 )
 
 add_test(
-  NAME test_range
-  COMMAND test_range ${CRITERION_FLAGS}
+  NAME test_mean
+  COMMAND test_mean ${CRITERION_FLAGS}
 )

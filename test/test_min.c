@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#include "../src/data_handling.h"
+#include "../src/array_helpers.h"
 
 Test(find_min, descending_array) {
   float numbers[5] = {5, 4, 3, 2, 1};
@@ -16,6 +16,6 @@ Test(find_min, negative_array) {
 }
 
 Test(find_min, single_digit) {
-  float numbers[1] = {5.0};
+  float numbers[1] = {(float) 5.0};
   cr_assert(eq(flt, 5.0, find_min(numbers, 1)));
 }

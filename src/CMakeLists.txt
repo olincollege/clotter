@@ -1,1 +1,1 @@
-add_library(data_handling data_handling.c data_handling.h)
+add_library(array_helpers array_helpers.c array_helpers.h)
