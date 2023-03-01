@@ -21,3 +21,12 @@ float find_min(const float numbers[], size_t size) {
 
   return min;
 }
+
+float find_mean(const float numbers[], size_t size) {
+  float sum = numbers[0];
+  for (size_t i = 1; i < size; i++) {
+    sum += numbers[i];
+  }
+
+  return sum / (float) size;
+}

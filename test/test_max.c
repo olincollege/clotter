@@ -16,6 +16,6 @@ Test(find_max, negative_array) {
 }
 
 Test(find_max, single_digit) {
-  float numbers[1] = {5.0};
+  float numbers[1] = {(float) 5.0};
   cr_assert(eq(flt, 5.0, find_max(numbers, 1)));
 }

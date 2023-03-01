@@ -21,3 +21,15 @@ add_test(
   NAME test_min
   COMMAND test_min ${CRITERION_FLAGS}
 )
+
+add_executable(test_mean test_mean.c)
+target_link_libraries(test_mean
+  PRIVATE array_helpers
+  PUBLIC ${CRITERION}
+  m
+)
+
+add_test(
+  NAME test_mean
+  COMMAND test_mean ${CRITERION_FLAGS}
+)
