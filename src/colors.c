@@ -1,4 +1,3 @@
-//#include <stdio.h>
 #include <string.h>
 #define RED   "\x1B[31m"
 #define GRN   "\x1B[32m"
@@ -16,17 +15,3 @@ char* red(char* dst,const char* str){
     strcat(dst,RESET);
     return dst;
 }
-
-//    int main() {
-//        printf(RED "red\n"     RESET);
-//        printf(GRN "green\n"   RESET);
-//        printf(YEL "yellow\n"  RESET);
-//        printf(BLU "blue\n"    RESET);
-//        printf(MAG "magenta\n" RESET);
-//        printf(CYN "cyan\n"    RESET);
-//        printf(WHT "white\n"   RESET);
-//        char * test = "HELLO WORLD";
-//        char dest[(int)strlen(test)];
-//        printf("%s",red(dest, test));
-//        return 0;
-//    }
