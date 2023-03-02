@@ -97,13 +97,8 @@ int count(Count all, int* num_colors){
         // TODO: error catch incorrect format of data being handed off.
         printf("\t%f\n",all.values[i]->nums.obs[0]);
     }
-    blocks(&b[i]);
-    printf(RESET);
-    // value in row
-    printf("\t%f\n", values[i]);
-  }
-  printf("\t\t\U00002517\n");
-  return 0;
+    printf("\t\t\U00002517\n");
+    return 0;
 }
 
 float o[3] = {600.0,200.0,1400.0};
