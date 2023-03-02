@@ -1,10 +1,10 @@
 #include "csv2data.h"
 
-int main(){
+int main() {
 
-    char* str = "../test.csv";
+  char* str = "../test.csv";
 
-    csv2arr(str);
-    
-    return 0;
+  csv2arr(str);
+
+  return 0;
 }
