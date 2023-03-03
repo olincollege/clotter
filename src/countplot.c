@@ -1,7 +1,8 @@
-#include "../src/data_types.h"
+#include "data_types.h"
 #include "array_helpers.h"
 #include "colors.c"
 #include "constants.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -133,33 +134,34 @@ int display_count(Count ct, int* num_colors) {
   return 0;
 }
 
-float o[3] = {600.0, 200.0, 1400.0};
-int nb[3];
-
-Series val1 = {
-    .name = "TESTtest",
-    .numbers = &o[0],
-};
-Series val2 = {
-    .name = "JONATHAN",
-    .numbers = &o[1],
-};
-Series val3 = {
-    .name = "JENNIFER",
-    .numbers = &o[2],
-};
-
-Series* cols = malloc(sizeof(Series) * 3);
-Dataframe v = {.columns = cols, .num_cols = 3, .num_rows = 1};
-
-Count ct = df_to_count(v);
-
-int nc = 4;
 int main(void) {
+
+  int nc = 4;
+  float o[3] = {600.0, 200.0, 1400.0};
+  int nb[3];
+
+  Series val1 = {
+      .name = "TESTtest",
+      .numbers = &o[0],
+  };
+  Series val2 = {
+      .name = "JONATHAN",
+      .numbers = &o[1],
+  };
+  Series val3 = {
+      .name = "JENNIFER",
+      .numbers = &o[2],
+  };
+
+  Series* cols = malloc(sizeof(Series) * 3);
+  Dataframe v = {.columns = cols, .num_cols = 3, .num_rows = 1};
+
+  Count ct = df_to_count(v);
 
   for (int j = 0; j < sizeof(nb); j++) {
     nb[j] = (o[j] / 70) * 8;
   }
   ct.numblocks = nb;
   display_count(ct, &nc);
+  free(cols);
 }
