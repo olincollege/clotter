@@ -2,18 +2,21 @@
 
 #include <stdlib.h>
 
-typedef struct{
-    float* obs;
-    size_t size;
-}Data;
+typedef struct {
+    // cap name at 20 characters for statc compile-time size
+    const char name[20];
+    float* numbers;
+} Series;
 
 typedef struct {
-    char *name;
-    Data nums;
-}Series;
+    Series* columns;
+    size_t num_cols;
+    size_t num_rows;
+    // assumes that all columns have the same length -- afaik this is true
+} Dataframe;
 
 typedef struct {
-    Series **values;
-    int *numblocks;
-    size_t length;
-}Count;
+    Dataframe dataframe;
+    int* numblocks; // array containing number of 1/8 character-width blocks to plot
+    // this array has length dataframe.num_cols
+} Count;
