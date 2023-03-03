@@ -9,7 +9,7 @@
 
 // TODO: mode into a helper function
 
-Count df_to_count(const Dataframe df) {
+static Count df_to_count(const Dataframe df) {
 
   // place data values in its own array of length num_rows
   // for find_max_scalar and easier iteration later
