@@ -4,7 +4,7 @@
 
 typedef struct {
     // cap name at 20 characters for statc compile-time size
-    const char name[20];
+    char name[20];
     float* numbers;
 } Series;
 
@@ -16,7 +16,7 @@ typedef struct {
 } Dataframe;
 
 typedef struct {
-    Dataframe dataframe;
+    Dataframe* dataframe;
     int* numblocks; // array containing number of 1/8 character-width blocks to plot
     // this array has length dataframe.num_cols
 } Count;
