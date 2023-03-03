@@ -139,17 +139,14 @@ int nb[3];
 Series val1 = {
     .name = "TESTtest",
     .numbers = &o[0],
-    .size = (size_t)1,
 };
 Series val2 = {
     .name = "JONATHAN",
     .numbers = &o[1],
-    .size = (size_t)1,
 };
 Series val3 = {
     .name = "JENNIFER",
     .numbers = &o[2],
-    .size = (size_t)1,
 };
 
 Series* cols = malloc(sizeof(Series) * 3);
