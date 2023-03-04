@@ -50,7 +50,11 @@ float find_mean(const float numbers[], size_t size);
 
 /*
  * Given a constant array of floats, the size of the constant array, and the size
- * of the plots width
+ * of the plot's width, first determine the max of the array, then determine how much the raw values of the plot will be 
+ * scaled by.
  *
+ * @param nummbers constant float array containing raw values for the plot
+ * @param size size_t variable describing the length of the raw values array
+ * @param plot_width size_t variable describing the character width of the plot
  */
 float find_max_scalar(const float numbers[], size_t size, size_t plot_width);
