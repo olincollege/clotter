@@ -7,28 +7,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <signal.h>
 
 // TODO: mode into a helper function
 
-Count df_to_count(Dataframe* df) {
+static Count df_to_count(Dataframe* df) {
 
   // place data values in its own array of length num_rows
   // for find_max_scalar and easier iteration later
   float* values = (float*) malloc(sizeof(float) * df->num_rows);
-  for (size_t i = 0; i < df->num_rows; i++) {
+  for (size_t i = 0; i < df->num_cols; i++) {
     values[i] = df->columns[i].numbers[0];
   }
+  
 
   // initialize a scalar to keep plot lengths at a max length
-  float max_scalar = find_max_scalar(values, df->num_rows, PLOT_WIDTH);
+  float max_scalar = find_max_scalar(values, df->num_cols, PLOT_WIDTH);
 
   // create array of length df->num_rows
   // to store the number of 1/8 charwidth blocks to plot
   int* numblocks = (int*) malloc(sizeof(int) * df->num_rows);
-  for (size_t i = 0; i < df->num_rows; i++) {
+  for (size_t i = 0; i < df->num_cols; i++) {
     // scale by max_scalar to keep within plot bounds
     // scale by 1/8 because we plot with 1/8 resolution
-    numblocks[i] = (int)floor(values[i] * max_scalar * (float)8);
+    numblocks[i] = (int)floor(values[i] * max_scalar * 8);
   }
   // done with values
   free(values);
@@ -85,15 +87,15 @@ static void blocks(int nblocks) {
     complement = "";
   }
   printf("%s", complement);
-  for (int i = 0; i < 20 - b_; i++) {
+  for (int i = 0; i < PLOT_WIDTH - b_; i++) {
     printf(" ");
   }
 }
 
-int display_count(Count ct, int* num_colors) {
+int display_count(Count ct, int num_colors) {
   // unsure if this will continue to work with the new structs
   // -- need length of series array
-  printf("Number of colors: %i, Number of bars: %zu\n", *num_colors,
+  printf("Number of colors: %i, Number of bars: %zu\n", num_colors,
          ct.dataframe->num_cols);
 
   printf("\t\t\U0000250F\n");
@@ -102,7 +104,7 @@ int display_count(Count ct, int* num_colors) {
     printf("%s\t", ct.dataframe->columns[i].name);
 
     printf("\U0000252B");
-    switch (i % *num_colors) {
+    switch (i % num_colors) {
     case 6:
       printf(MAG);
       break;
@@ -125,14 +127,14 @@ int display_count(Count ct, int* num_colors) {
       printf(GRN);
       break;
     }
-    printf("%d\n", ct.numblocks[i]);
+    // printf("%d", ct.numblocks[i]);
     blocks(ct.numblocks[i]);
-    free(ct.numblocks);
     printf(RESET);
     // value in row
     // TODO: error catch incorrect format of data being handed off.
     printf("\t%f\n", ct.dataframe->columns[i].numbers[0]);
   }
+  free(ct.numblocks);
   printf("\t\t\U00002517\n");
   return 0;
 }
@@ -165,6 +167,8 @@ int main(void) {
 
   Count ct = df_to_count(&v);
 
-  display_count(ct, &nc);
+  display_count(ct, nc);
   free(cols);
+
+  return 0;
 }

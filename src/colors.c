@@ -7,11 +7,3 @@
 #define CYN "\x1B[36m"
 #define WHT "\x1B[37m"
 #define RESET "\x1B[0m"
-
-char* red(char* dst, const char* str) {
-  // concatenate codes for string to show up as red
-  strcat(dst, RED);
-  strcat(dst, str);
-  strcat(dst, RESET);
-  return dst;
-}
