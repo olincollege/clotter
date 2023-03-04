@@ -1,6 +1,5 @@
 #include "data_types.h"
 #include "array_helpers.h"
-#include "colors.c"
 #include "constants.h"
 
 #include <math.h>
@@ -83,7 +82,7 @@ static void blocks(int* nblocks) {
     complement = "";
   }
   printf("%s", complement);
-  for (int i = 0; i < 20 - b_; i++) {
+  for (int i = 0; i < (PLOT_WIDTH-20) - b_; i++) {
     printf(" ");
   }
 }
@@ -134,6 +133,8 @@ int display_count(Count ct, int* num_colors) {
   return 0;
 }
 
+
+// TODO: explain this test case
 int main(void) {
 
   int nc = 4;
