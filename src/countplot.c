@@ -1,6 +1,5 @@
 #include "data_types.h"
 #include "array_helpers.h"
-#include "colors.c"
 #include "constants.h"
 
 #include <math.h>
@@ -139,6 +138,8 @@ int display_count(Count ct, int num_colors) {
   return 0;
 }
 
+
+// TODO: explain this test case
 int main(void) {
 
   int nc = 4;
