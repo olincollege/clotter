@@ -5,7 +5,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <signal.h>
+#include <ctype.h>
 
 // TODO: mode into a helper function
 
@@ -40,8 +42,16 @@ static Count df_to_count(Dataframe* df) {
   return out_count;
 }
 
+static void pad(int width, int length){
+  // pads a string by the width minus the length
+  //printf("%i %i",width, length);
+  for (int i = 0; i <(size_t)width-length ; i++) {
+    printf(" ");
+  }
+}
+
 static void blocks(int nblocks) {
-  // returns a string of length 20 filled with scale many blocks, resolution
+  // returns a string of length PLOT_WIDTH filled with scale many blocks, resolution
   // 1/8.
   float scale = (float)(nblocks) / 8;
   int b_ = (int)floor(scale);
@@ -84,10 +94,8 @@ static void blocks(int nblocks) {
       // weirdness
       complement = "";
   }
-  //printf("%s", complement);
-  for (int i = 0; i < PLOT_WIDTH - b_; i++) {
-    printf(" ");
-  }
+  printf("%s", complement);
+  pad(PLOT_WIDTH,b_);
 }
 
 int display_count(Count ct, int num_colors) {
@@ -95,13 +103,17 @@ int display_count(Count ct, int num_colors) {
   // -- need length of series array
   printf("Number of colors: %i, Number of bars: %zu\n", num_colors,
          ct.dataframe->num_cols);
-
-  printf("\t\t%s\n",TOP_LEFT_CORNER);
+  pad(NAME_SPACE,0);
+  printf(" %s\n",TOP_LEFT_CORNER);
   for (size_t i = 0; i < ct.dataframe->num_cols; i++) {
     // name of row
-    printf("%s\t", ct.dataframe->columns[i].name);
+    printf(" %s", ct.dataframe->columns[i].name);
+    // pad size of name with total number of chars
+    
+    pad(NAME_SPACE,strlen(ct.dataframe->columns[i].name));
     
     printf(LEFT_TICK);
+
     switch (i % num_colors) {
     case 6:
       printf(MAG);
@@ -129,10 +141,11 @@ int display_count(Count ct, int num_colors) {
     printf(RESET);
     // value in row
     // TODO: error catch incorrect format of data being handed off.
-    printf("\t%f\n", ct.dataframe->columns[i].numbers[0]);
+    printf("  %f\n", ct.dataframe->columns[i].numbers[0]);
   }
   free(ct.numblocks);
-  printf("\t\t%s\n",BOTTOM_LEFT_CORNER);
+  pad(NAME_SPACE,0);
+  printf(" %s\n",BOTTOM_LEFT_CORNER);
   return 0;
 }
 // TODO: explain this test case

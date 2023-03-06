@@ -1,12 +1,12 @@
 #pragma once
 
 #include <stdlib.h>
-
+#include "constants.h"
 
 // TODO: Add unicode chars for blocks here, increase code readiblity
 typedef struct {
     // cap name at 20 characters for statc compile-time size
-    char name[20];
+    char name[NAME_SPACE];
     float* numbers;
 } Series;
 
