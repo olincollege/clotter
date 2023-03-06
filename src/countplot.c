@@ -1,123 +1,190 @@
-#include "../src/data_types.h"
-#include"colors.c"
-#include<math.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<time.h>
+#include "data_types.h"
+#include "array_helpers.h"
+#include "constants.h"
+
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <signal.h>
+#include <ctype.h>
 
 // TODO: mode into a helper function
 
+static Count df_to_count(Dataframe* df) {
 
+  // place data values in its own array of length num_rows
+  // for find_max_scalar and easier iteration later
+  float* values = (float*) malloc(sizeof(float) * df->num_rows);
+  for (size_t i = 0; i < df->num_cols; i++) {
+    values[i] = df->columns[i].numbers[0];
+  }
+  
 
-static void blocks(int* nblocks){
-    // returns a string of length 20 filled with scale many blocks, resolution 1/8.
-    char *whole_block = "\U00002588";
-    float scale = (float)*nblocks/8;
-    int b_ = floor(scale);
-    char output[21-b_];
+  // initialize a scalar to keep plot lengths at a max length
+  float max_scalar = find_max_scalar(values, df->num_cols, PLOT_WIDTH);
+
+  // create array of length df->num_rows
+  // to store the number of 1/8 charwidth blocks to plot
+  int* numblocks = (int*) malloc(sizeof(int) * df->num_rows);
+  for (size_t i = 0; i < df->num_cols; i++) {
+    // scale by max_scalar to keep within plot bounds
+    // scale by 1/8 because we plot with 1/8 resolution
+    numblocks[i] = (int)floor(values[i] * max_scalar * 8);
+  }
+  // done with values
+  free(values);
+
+  Count out_count;
+  out_count.dataframe = df;
+  out_count.numblocks = numblocks;
+
+  return out_count;
+}
+
+static void pad(int width, int length){
+  // pads a string by the width minus the length
+  //printf("%i %i",width, length);
+  for (int i = 0; i <(size_t)width-length ; i++) {
+    printf(" ");
+  }
+}
+
+static void blocks(int nblocks) {
+  // returns a string of length PLOT_WIDTH filled with scale many blocks, resolution
+  // 1/8.
+  float scale = (float)(nblocks) / 8;
+  int b_ = (int)floor(scale);
+  char output[PLOT_WIDTH - b_];
+
+  for (int i = 0; i < b_; i++) {
+    printf("%s", WHOLE_BLOCK);
+  }
+  char* complement = "";
+  // determine complement for blocks
+  int state = nblocks % 8;
+ 
+  switch (state) {
+    case 1:
+      complement = BLOCK_1;
+      break;
+    case 2:
+      complement = BLOCK_2;
+      break;
+    case 3:
+      complement = BLOCK_3;
+      break;
+    case 4:
+      complement = BLOCK_4;
+      break;
+    case 5:
+      complement = BLOCK_5;
+      break;
+    case 6:
+      complement = BLOCK_6;
+      break;
+    case 7:
+      complement = BLOCK_7;
+      break;
+    case 8:
+      complement = BLOCK_8;
+      break;
+    case 0:
+      // for some godforsaken reason need this case to catch float to int
+      // weirdness
+      complement = "";
+  }
+  printf("%s", complement);
+  pad(PLOT_WIDTH,b_);
+}
+
+int display_count(Count ct, int num_colors) {
+  // unsure if this will continue to work with the new structs
+  // -- need length of series array
+  printf("Number of colors: %i, Number of bars: %zu\n", num_colors,
+         ct.dataframe->num_cols);
+  pad(NAME_SPACE,0);
+  printf(" %s\n",TOP_LEFT_CORNER);
+  for (size_t i = 0; i < ct.dataframe->num_cols; i++) {
+    // name of row
+    printf(" %s", ct.dataframe->columns[i].name);
+    // pad size of name with total number of chars
     
-    for (int i = 0; i< b_; i++){
-        printf("%s", whole_block);
+    pad(NAME_SPACE,strlen(ct.dataframe->columns[i].name));
+    
+    printf(LEFT_TICK);
+
+    switch (i % num_colors) {
+    case 6:
+      printf(MAG);
+      break;
+    case 5:
+      printf(WHT);
+      break;
+    case 4:
+      printf(BLU);
+      break;
+    case 3:
+      printf(YEL);
+      break;
+    case 2:
+      printf(CYN);
+      break;
+    case 1:
+      printf(RED);
+      break;
+    case 0:
+      printf(GRN);
+      break;
     }
-    char *complement = "";
-    // determine complement for blocks 
-    int state = (int)round((scale - (float)b_)*8);
-    switch(state){
-        case 1:
-            complement = "\U0000258F";
-            break;
-        case 2:
-            complement = "\U0000258E";
-            break;
-        case 3:
-            complement = "\U0000258D";
-            break;
-        case 4: 
-            complement = "\U0000258C";
-            break; 
-        case 5: 
-            complement = "\U0000258B";
-            break;
-        case 6:
-            complement = "\U0000258A";
-            break;
-        case 7:
-            complement = "\U00002589";
-            break;
-        case 8:
-            complement = "\U00002588";
-            break;
-        case 0:
-            // for some godforsaken reason need this case to catch float to int weirdness
-            complement = "";
-    }
-    printf("%s",complement);
-    for (int i = 0; i<20-b_;i++){
-        printf(" ");
-    }
+    blocks(ct.numblocks[i]);
+    printf(RESET);
+    // value in row
+    // TODO: error catch incorrect format of data being handed off.
+    printf("  %f\n", ct.dataframe->columns[i].numbers[0]);
+  }
+  free(ct.numblocks);
+  pad(NAME_SPACE,0);
+  printf(" %s\n",BOTTOM_LEFT_CORNER);
+  return 0;
 }
+// TODO: explain this test case
+int main(void) {
 
-int count(Count all, int* num_colors){
-    // unsure if this will continue to work with the new structs
-    // -- need length of series array
-    printf("Number of colors: %i, Number of bars: %i\n", *num_colors,(int)all.length);
+  int nc = 4;
+  float o1 = 600;
+  float o2 = 200;
+  float o3 = 1400;
+  float o4 = 500;
 
-    printf("\t\t\U0000250F\n");
-    for (int i = 0;i<(int)all.length;i++){
-        // name of row
-        printf("%s\t", all.values[i]->name);
+  Series val1 = {
+      .name = "TESTtest",
+      .numbers = &o1,
+  };
+  Series val2 = {
+      .name = "JONATHAN",
+      .numbers = &o2,
+  };
+  Series val3 = {
+      .name = "JENNIFER",
+      .numbers = &o3,
+  };
+  Series val4 = {
+      .name = "LARRYLARRY",
+      .numbers = &o4,
+  };
 
-        printf("\U0000252B");
-        switch(i%*num_colors){
-            case 6:
-                printf(MAG);
-                break; 
-            case 5:
-                printf(WHT);
-                break; 
-            case 4:
-                printf(BLU);
-                break; 
-            case 3:
-                printf(YEL);
-                break; 
-            case 2:
-                printf(CYN);
-                break; 
-            case 1:
-                printf(RED);
-                break;
-            case 0:
-                printf(GRN);
-                break;
-        }
-        blocks(&all.numblocks[i]);
-        printf(RESET);
-        // value in row
-        // TODO: error catch incorrect format of data being handed off.
-        printf("\t%f\n",all.values[i]->nums.obs[0]);
-    }
-    printf("\t\t\U00002517\n");
-    return 0;
-}
+  Series* cols = malloc(sizeof(Series) * 4);
+  cols[0] = val1;
+  cols[1] = val2;
+  cols[2] = val3;
+  cols[3] = val4;
+  Dataframe v = {.columns = cols, .num_cols = 4, .num_rows = 1};
 
-float o[3] = {600.0,200.0,1400.0};
-int nb[3];
+  Count ct = df_to_count(&v);
 
+  display_count(ct, nc);
+  free(cols);
 
-Series val1= {.name = "TESTtest", .nums = {.obs = &o[0], .size= (size_t)1,}};
-Series val2= {.name = "JONATHAN", .nums = {.obs = &o[1], .size= (size_t)1,}};
-Series val3= {.name = "JENNIFER", .nums = {.obs = &o[2], .size= (size_t)1,}};
-Series* v[3] = {&val1,&val2,&val3};
-
-Count val = {.values = v,.numblocks=0,.length= (size_t)3};
-int nc = 4;
-int main(void){
-
-    for ( int j = 0; j<sizeof(nb); j++)
-    {
-        nb[j] = (o[j]/70)*8;
-    }
-    val.numblocks = nb;
-    count(val,&nc);
+  return 0;
 }
