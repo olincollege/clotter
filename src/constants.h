@@ -7,9 +7,9 @@
 
 #define TOP_LEFT_CORNER     "\U0000250C"
 #define TOP_RIGHT_CORNER    
-#define BOTTOM_LEFT_CORNER  "\U00002414"
+#define BOTTOM_LEFT_CORNER  "\U00002514"
 #define BOTTOM_RIGHT_CORNER "\U00002518"
-#define LEFT_TICK           "\U0000252B"
+#define LEFT_TICK           "\U00002524"
 #define BOTTOM_TICK         
 #define HORIZONTAL_BAR      
 #define VERTICAL_BAR        

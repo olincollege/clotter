@@ -95,11 +95,11 @@ int display_count(Count ct, int num_colors) {
   printf("Number of colors: %i, Number of bars: %zu\n", num_colors,
          ct.dataframe->num_cols);
 
-  printf("\t\t\U0000250F\n");
+  printf("\t\t%s\n",TOP_LEFT_CORNER);
   for (size_t i = 0; i < ct.dataframe->num_cols; i++) {
     // name of row
     printf("%s\t", ct.dataframe->columns[i].name);
-
+    
     printf(LEFT_TICK);
     switch (i % num_colors) {
     case 6:
@@ -124,15 +124,15 @@ int display_count(Count ct, int num_colors) {
       printf(GRN);
       break;
     }
-    // printf("%d", ct.numblocks[i]);
-    blocks(ct.numblocks[i]);
+    printf("%d", ct.numblocks[i]);
+    //blocks(ct.numblocks[i]);
     printf(RESET);
     // value in row
     // TODO: error catch incorrect format of data being handed off.
     printf("\t%f\n", ct.dataframe->columns[i].numbers[0]);
   }
   free(ct.numblocks);
-  printf("\t\t\U00002517\n");
+  printf("\t\t%s\n",BOTTOM_LEFT_CORNER);
   return 0;
 }
 
