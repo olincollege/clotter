@@ -43,47 +43,48 @@ static Count df_to_count(Dataframe* df) {
 static void blocks(int nblocks) {
   // returns a string of length 20 filled with scale many blocks, resolution
   // 1/8.
-  float scale = (float)nblocks / 8;
-  int b_ = floor(scale);
-  char output[21 - b_];
+  float scale = (float)(nblocks) / 8;
+  int b_ = (int)floor(scale);
+  char output[PLOT_WIDTH - b_];
 
   for (int i = 0; i < b_; i++) {
     printf("%s", WHOLE_BLOCK);
   }
   char* complement = "";
   // determine complement for blocks
-  int state = (int)round((scale - (float)b_) * 8);
+  int state = nblocks % 8;
+ 
   switch (state) {
-  case 1:
-    complement = BLOCK_1;
-    break;
-  case 2:
-    complement = BLOCK_2;
-    break;
-  case 3:
-    complement = BLOCK_3;
-    break;
-  case 4:
-    complement = BLOCK_4;
-    break;
-  case 5:
-    complement = BLOCK_5;
-    break;
-  case 6:
-    complement = BLOCK_6;
-    break;
-  case 7:
-    complement = BLOCK_7;
-    break;
-  case 8:
-    complement = BLOCK_8;
-    break;
-  case 0:
-    // for some godforsaken reason need this case to catch float to int
-    // weirdness
-    complement = "";
+    case 1:
+      complement = BLOCK_1;
+      break;
+    case 2:
+      complement = BLOCK_2;
+      break;
+    case 3:
+      complement = BLOCK_3;
+      break;
+    case 4:
+      complement = BLOCK_4;
+      break;
+    case 5:
+      complement = BLOCK_5;
+      break;
+    case 6:
+      complement = BLOCK_6;
+      break;
+    case 7:
+      complement = BLOCK_7;
+      break;
+    case 8:
+      complement = BLOCK_8;
+      break;
+    case 0:
+      // for some godforsaken reason need this case to catch float to int
+      // weirdness
+      complement = "";
   }
-  printf("%s", complement);
+  //printf("%s", complement);
   for (int i = 0; i < PLOT_WIDTH - b_; i++) {
     printf(" ");
   }
@@ -124,8 +125,7 @@ int display_count(Count ct, int num_colors) {
       printf(GRN);
       break;
     }
-    printf("%d", ct.numblocks[i]);
-    //blocks(ct.numblocks[i]);
+    blocks(ct.numblocks[i]);
     printf(RESET);
     // value in row
     // TODO: error catch incorrect format of data being handed off.
@@ -135,8 +135,6 @@ int display_count(Count ct, int num_colors) {
   printf("\t\t%s\n",BOTTOM_LEFT_CORNER);
   return 0;
 }
-
-
 // TODO: explain this test case
 int main(void) {
 
@@ -144,6 +142,7 @@ int main(void) {
   float o1 = 600;
   float o2 = 200;
   float o3 = 1400;
+  float o4 = 500;
 
   Series val1 = {
       .name = "TESTtest",
@@ -157,12 +156,17 @@ int main(void) {
       .name = "JENNIFER",
       .numbers = &o3,
   };
+  Series val4 = {
+      .name = "LARRYLARRY",
+      .numbers = &o4,
+  };
 
-  Series* cols = malloc(sizeof(Series) * 3);
+  Series* cols = malloc(sizeof(Series) * 4);
   cols[0] = val1;
   cols[1] = val2;
   cols[2] = val3;
-  Dataframe v = {.columns = cols, .num_cols = 3, .num_rows = 1};
+  cols[3] = val4;
+  Dataframe v = {.columns = cols, .num_cols = 4, .num_rows = 1};
 
   Count ct = df_to_count(&v);
 
