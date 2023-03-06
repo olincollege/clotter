@@ -43,41 +43,40 @@ static Count df_to_count(Dataframe* df) {
 static void blocks(int nblocks) {
   // returns a string of length 20 filled with scale many blocks, resolution
   // 1/8.
-  char* whole_block = "\U00002588";
   float scale = (float)nblocks / 8;
   int b_ = floor(scale);
   char output[21 - b_];
 
   for (int i = 0; i < b_; i++) {
-    printf("%s", whole_block);
+    printf("%s", WHOLE_BLOCK);
   }
   char* complement = "";
   // determine complement for blocks
   int state = (int)round((scale - (float)b_) * 8);
   switch (state) {
   case 1:
-    complement = "\U0000258F";
+    complement = BLOCK_1;
     break;
   case 2:
-    complement = "\U0000258E";
+    complement = BLOCK_2;
     break;
   case 3:
-    complement = "\U0000258D";
+    complement = BLOCK_3;
     break;
   case 4:
-    complement = "\U0000258C";
+    complement = BLOCK_4;
     break;
   case 5:
-    complement = "\U0000258B";
+    complement = BLOCK_5;
     break;
   case 6:
-    complement = "\U0000258A";
+    complement = BLOCK_6;
     break;
   case 7:
-    complement = "\U00002589";
+    complement = BLOCK_7;
     break;
   case 8:
-    complement = "\U00002588";
+    complement = BLOCK_8;
     break;
   case 0:
     // for some godforsaken reason need this case to catch float to int
@@ -101,7 +100,7 @@ int display_count(Count ct, int num_colors) {
     // name of row
     printf("%s\t", ct.dataframe->columns[i].name);
 
-    printf("\U0000252B");
+    printf(LEFT_TICK);
     switch (i % num_colors) {
     case 6:
       printf(MAG);
