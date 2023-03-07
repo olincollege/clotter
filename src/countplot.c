@@ -1,4 +1,5 @@
 #include "../src/data_types.h"
+#include "countplot.h"
 #include"colors.c"
 #include<math.h>
 #include<stdio.h>

@@ -2,7 +2,7 @@
 
 int main() {
 
-  char* str = "../test.csv";
+  char* str = "../test/test.csv";
 
   csv2arr(str);
 
