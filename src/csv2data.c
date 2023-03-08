@@ -25,6 +25,7 @@ void csv2arr(char* file_path) {
   Dataframe output; 
   output.num_rows = count_csv_lines(file_path);
   Series total_series[output.num_rows];
+  int series_count = 0;
 
   int header_flag = 0;
 
@@ -78,6 +79,9 @@ void csv2arr(char* file_path) {
       // reset header flag to recognize next row name
       header_flag == 0;
       s.numbers = array; // assigning Series numbers object temp array
+
+      total_series[series_count] = s; // add series into Dataframe
+      series_count++;
 
     } while (!feof(fp));
     fclose(fp);
