@@ -15,7 +15,7 @@ static Count df_to_count(Dataframe* df) {
 
   // place data values in its own array of length num_rows
   // for find_max_scalar and easier iteration later
-  float* values = (float*) malloc(sizeof(float) * df->num_rows);
+  float* values = (float*) malloc(sizeof(float) * df->num_cols);
   for (size_t i = 0; i < df->num_cols; i++) {
     values[i] = df->columns[i].numbers[0];
   }
@@ -26,7 +26,7 @@ static Count df_to_count(Dataframe* df) {
 
   // create array of length df->num_rows
   // to store the number of 1/8 charwidth blocks to plot
-  int* numblocks = (int*) malloc(sizeof(int) * df->num_rows);
+  int* numblocks = (int*) malloc(sizeof(int) * df->num_cols);
   for (size_t i = 0; i < df->num_cols; i++) {
     // scale by max_scalar to keep within plot bounds
     // scale by 1/8 because we plot with 1/8 resolution
@@ -174,7 +174,7 @@ int main(void) {
       .numbers = &o4,
   };
 
-  Series* cols = malloc(sizeof(Series) * 4);
+  Series* cols = (Series*) malloc(sizeof(Series) * 4);
   cols[0] = val1;
   cols[1] = val2;
   cols[2] = val3;
