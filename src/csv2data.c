@@ -7,22 +7,22 @@
 
 int count_csv_lines(char* file_path){
   FILE* fp = fopen(file_path, "r");
-  char c;
+  char c = '0';
   int count = 0;
-
   for (c = getc(fp); c != EOF; c = getc(fp))
         if (c == '\n') // Increment count if this character is newline
-            count = count + 1;
+            count++;
 
   fclose(fp);
 
   return count;
 }
 
-void csv2arr(char* file_path) {
+Dataframe* csv2arr(char* file_path) {
 
   // initialize Dataframe and number of rows
   Dataframe output; 
+  
   output.num_rows = count_csv_lines(file_path);
   Series total_series[output.num_rows];
   int series_count = 0;
@@ -52,14 +52,17 @@ void csv2arr(char* file_path) {
       }
 
       char* token = strtok(buffer, ",");
-
+      
       // sets Dataframe length if not initialized
-      if(output.num_cols == NULL){
-        output.num_cols = strlen(token);
-      }
-
+     // if(output.num_cols == NULL){
+     //   output.num_cols = strlen(token);
+     //   printf("B\n");
+     // }
+      
+      output.num_cols = strlen(token);
     // initialize Series struct
       Series s;
+      
       float array[output.num_cols];
     
       int col_count = 0;
@@ -77,8 +80,8 @@ void csv2arr(char* file_path) {
       }
 
       // reset header flag to recognize next row name
-      header_flag == 0;
-      s.numbers = array; // assigning Series numbers object temp array
+      header_flag = 0;
+      s.numbers = array; // check &// assigning Series numbers object temp array
 
       total_series[series_count] = s; // add series into Dataframe
       series_count++;
@@ -86,4 +89,7 @@ void csv2arr(char* file_path) {
     } while (!feof(fp));
     fclose(fp);
   }
+  output.columns = total_series;
+  return &output;
+
 }
