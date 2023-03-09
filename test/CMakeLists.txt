@@ -45,3 +45,15 @@ add_test(
   NAME test_max_scalar
   COMMAND test_max_scalar ${CRITERION_FLAGS}
 )
+
+add_executable(test_countplot test_countplot.c)
+target_link_libraries(test_countplot
+  PRIVATE array_helpers
+  PUBLIC ${CRITERION}
+  m
+)
+
+add_test(
+  NAME test_countplot
+  COMMAND test_countplot ${CRITERION_FLAGS}
+)

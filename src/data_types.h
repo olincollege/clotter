@@ -17,6 +17,7 @@ typedef struct {
     // assumes that all columns have the same length -- afaik this is true
 } Dataframe;
 
+// MEMORY ALLOCATED: numblocks should be freed when done with this struct
 typedef struct {
     Dataframe* dataframe;
     int* numblocks; // array containing number of 1/8 character-width blocks to plot
