@@ -1,10 +1,21 @@
 #pragma once
 
 #include "constants.h"
+#include "data_types.h"
 
 #include <stdlib.h>
 
-// TODO: Add unicode chars for blocks here, increase code readiblity
+int dataframe_free(Dataframe* dataframe) {
+  for (size_t col = 0; col < dataframe->num_cols; col++) {
+    free(dataframe->columns + col);
+  }
+
+  free(dataframe);
+
+  return 0;
+}
+
+/*// TODO: Add unicode chars for blocks here, increase code readiblity
 typedef struct {
     // cap name at 20 characters for statc compile-time size
     char name[NAME_SPACE];
@@ -18,8 +29,6 @@ typedef struct {
     // assumes that all columns have the same length -- afaik this is true
 } Dataframe;
 
-int dataframe_free(Dataframe* dataframe);
-
 // WARNING: numblocks is allocated when df_to_count is called, and it should
 // be freed when it is done being used.
 typedef struct {
@@ -28,3 +37,4 @@ typedef struct {
     // this array has length dataframe.num_cols
     // Additional peripheral values should be added to this struct such as plot name, colors
 } Count;
+*/
