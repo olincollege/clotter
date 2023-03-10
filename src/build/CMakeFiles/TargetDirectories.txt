@@ -1,0 +1,3 @@
+/home/skaplan/clotter/src/build/CMakeFiles/array_helpers.dir
+/home/skaplan/clotter/src/build/CMakeFiles/edit_cache.dir
+/home/skaplan/clotter/src/build/CMakeFiles/rebuild_cache.dir
