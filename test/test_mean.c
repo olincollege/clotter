@@ -5,6 +5,7 @@
 
 #include "../src/array_helpers.h"
 
+// NOLINTBEGIN(*-magic-numbers)
 Test(find_mean, ascending_array) {
   float numbers[5] = {1, 2, 3, 4, 5};
   cr_assert(ieee_ulp_eq(flt, 3, find_mean(numbers, 5), 4));
@@ -24,3 +25,4 @@ Test(find_mean, single_digit) {
   float numbers[1] = {(float) 5.0};
   cr_assert(ieee_ulp_eq(flt, 5.0, find_mean(numbers, 1), 4));
 }
+// NOLINTEND(*-magic-numbers)
