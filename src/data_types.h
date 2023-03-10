@@ -1,7 +1,8 @@
 #pragma once
 
-#include <stdlib.h>
 #include "constants.h"
+
+#include <stdlib.h>
 
 // TODO: Add unicode chars for blocks here, increase code readiblity
 typedef struct {

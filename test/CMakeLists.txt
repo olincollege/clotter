@@ -48,6 +48,7 @@ add_test(
 
 add_executable(test_countplot test_countplot.c)
 target_link_libraries(test_countplot
+  PRIVATE countplot
   PRIVATE array_helpers
   PUBLIC ${CRITERION}
   m
