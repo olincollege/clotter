@@ -4,7 +4,7 @@
 #pragma once
 
 #include <string.h>
-
+#include "data_types.h"
 static const char WHITESPACE[] = " \f\n\r\t\v";
 
 /**
@@ -19,4 +19,4 @@ static const char WHITESPACE[] = " \f\n\r\t\v";
  *
  * @param filepath // assuming LINUX for now
  */
-void csv2arr(char* file_path);
+Dataframe* csv2arr(char* file_path);
