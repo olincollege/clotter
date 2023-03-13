@@ -181,5 +181,5 @@ int main(void) {
 
   display_count(ac_count, 4);
 
-  free(ac_count.numblocks);
+  //free(ac_count.numblocks);
 }
