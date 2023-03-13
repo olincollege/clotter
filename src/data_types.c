@@ -7,9 +7,10 @@
 
 int dataframe_free(Dataframe* dataframe) {
   for (size_t col = 0; col < dataframe->num_cols; col++) {
-    free(dataframe->columns + col);
+    free(dataframe->columns[col].numbers);
   }
 
+  free(dataframe->columns);
   free(dataframe);
 
   return 0;
