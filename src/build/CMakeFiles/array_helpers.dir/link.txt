@@ -1,2 +1,0 @@
-/usr/bin/ar qc libarray_helpers.a CMakeFiles/array_helpers.dir/array_helpers.c.o
-/usr/bin/ranlib libarray_helpers.a

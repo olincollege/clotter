@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/skaplan/clotter/src/build",
-  "command": "/usr/bin/gcc   -g -o CMakeFiles/array_helpers.dir/array_helpers.c.o -c /home/skaplan/clotter/src/array_helpers.c",
-  "file": "/home/skaplan/clotter/src/array_helpers.c"
-}
-]
