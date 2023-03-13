@@ -61,7 +61,8 @@ add_test(
 
 add_executable(test_datatypes test_datatypes.c)
 target_link_libraries(test_datatypes
-  PRIVATE datatypes
+  PRIVATE data_types
+  PUBLIC ${CRITERION}
   m
 )
 
