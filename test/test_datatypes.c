@@ -13,7 +13,7 @@ Test(dataframe_free, simple_success) {
 
   for (size_t i = 0; i < NUM_COLS; i++) {
     strcpy(series_ptr[i].name, "AbCD                ");
-    series_ptr[i].numbers = malloc(sizeof(float) * NUM_ROWS);
+    series_ptr[i].numbers = (float*)malloc(sizeof(float) * NUM_ROWS);
   }
 
   Dataframe* dataframe = malloc(sizeof(Dataframe));
