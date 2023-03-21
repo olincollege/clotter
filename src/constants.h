@@ -65,5 +65,5 @@
 
 enum {
   PLOT_WIDTH = 80,
-  NAME_SPACE = 20
+  NAME_SPACE = 20,
 };

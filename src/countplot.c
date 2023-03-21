@@ -1,119 +1,136 @@
-#include "data_types.h"
 #include "array_helpers.h"
 #include "constants.h"
+#include "data_types.h"
+#include "countplot.h"
 
+#include <ctype.h>
 #include <math.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
-#include <ctype.h>
 
-// TODO: mode into a helper function
+/*
+ * This code makes heavy use of a magic number, 8.
+ * This is due to the Unicode standard including 8 sub-blocks within
+ * a single character block, so we can display values in the x-direction
+ * with a higher resolution.
+ *
+ * Any such magic numbers are delinted.
+ */
 
-static Count df_to_count(Dataframe* df) {
+Count df_to_count(Dataframe* dataframe) {
 
   // place data values in its own array of length num_rows
   // for find_max_scalar and easier iteration later
-  float* values = (float*) malloc(sizeof(float) * df->num_cols);
-  for (size_t i = 0; i < df->num_cols; i++) {
-    values[i] = df->columns[i].numbers[0];
+  float* values = (float*)malloc(sizeof(float) * dataframe->num_cols);
+  for (size_t i = 0; i < dataframe->num_cols; i++) {
+    values[i] = dataframe->columns[i].numbers[0];
   }
-  
 
   // initialize a scalar to keep plot lengths at a max length
-  float max_scalar = find_max_scalar(values, df->num_cols, PLOT_WIDTH);
+  float max_scalar = find_max_scalar(values, dataframe->num_cols, PLOT_WIDTH);
 
-  // create array of length df->num_rows
+  // create array of length dataframe->num_rows
   // to store the number of 1/8 charwidth blocks to plot
-  int* numblocks = (int*) malloc(sizeof(int) * df->num_cols);
-  for (size_t i = 0; i < df->num_cols; i++) {
+  int* numblocks = (int*)malloc(sizeof(int) * dataframe->num_cols);
+  for (size_t i = 0; i < dataframe->num_cols; i++) {
     // scale by max_scalar to keep within plot bounds
-    // scale by 1/8 because we plot with 1/8 resolution
-    numblocks[i] = (int)floor(values[i] * max_scalar * 8);
+    // scale by our block resolution to create number of sub-blocks
+    // NOLINTNEXTLINE(*-magic-numbers)
+    numblocks[i] = (int)floorf(values[i] * max_scalar * 8);
   }
   // done with values
   free(values);
 
   Count out_count;
-  out_count.dataframe = df;
+  out_count.dataframe = dataframe;
   out_count.numblocks = numblocks;
 
   return out_count;
 }
 
-static void pad(int width, int length){
+static void pad(size_t width, size_t length) {
   // pads a string by the width minus the length
-  //printf("%i %i",width, length);
-  for (int i = 0; i <(size_t)width-length ; i++) {
+  // printf("%i %i",width, length);
+  for (size_t i = 0; i < width - length; i++) {
     printf(" ");
   }
 }
 
 static void blocks(int nblocks) {
-  // returns a string of length PLOT_WIDTH filled with scale many blocks, resolution
-  // 1/8.
+  // returns a string of length PLOT_WIDTH filled with scale many blocks
+  // NOLINTNEXTLINE(*-magic-numbers)
   float scale = (float)(nblocks) / 8;
-  int b_ = (int)floor(scale);
-  char output[PLOT_WIDTH - b_];
+  int num_whole = (int)floorf(scale);
 
-  for (int i = 0; i < b_; i++) {
+  for (int i = 0; i < num_whole; i++) {
     printf("%s", WHOLE_BLOCK);
   }
   char* complement = "";
   // determine complement for blocks
+  // NOLINTNEXTLINE(*-magic-numbers)
   int state = nblocks % 8;
- 
+
+  // once again we delint for magic numbers, since the 8 cases we have
+  // are hardcoded into Unicode.
+  // NOLINTBEGIN(*-magic-numbers)
   switch (state) {
-    case 1:
-      complement = BLOCK_1;
-      break;
-    case 2:
-      complement = BLOCK_2;
-      break;
-    case 3:
-      complement = BLOCK_3;
-      break;
-    case 4:
-      complement = BLOCK_4;
-      break;
-    case 5:
-      complement = BLOCK_5;
-      break;
-    case 6:
-      complement = BLOCK_6;
-      break;
-    case 7:
-      complement = BLOCK_7;
-      break;
-    case 8:
-      complement = BLOCK_8;
-      break;
-    case 0:
-      // for some godforsaken reason need this case to catch float to int
-      // weirdness
-      complement = "";
+  case 1:
+    complement = BLOCK_1;
+    break;
+  case 2:
+    complement = BLOCK_2;
+    break;
+  case 3:
+    complement = BLOCK_3;
+    break;
+  case 4:
+    complement = BLOCK_4;
+    break;
+  case 5:
+    complement = BLOCK_5;
+    break;
+  case 6:
+    complement = BLOCK_6;
+    break;
+  case 7:
+    complement = BLOCK_7;
+    break;
+  case 8:
+    complement = BLOCK_8;
+    break;
+  case 0:
+    // for some godforsaken reason need this case to catch
+    // float to int weirdness
+    complement = "";
+    break;
+  default:
+    complement = "";
   }
+  // NOLINTEND(*-magic-numbers)
+
   printf("%s", complement);
-  pad(PLOT_WIDTH,b_);
+  pad(PLOT_WIDTH, num_whole);
 }
 
-int display_count(Count ct, int num_colors) {
-  // unsure if this will continue to work with the new structs
-  // -- need length of series array
+int display_count(Count count, int num_colors) {
   printf("Number of colors: %i, Number of bars: %zu\n", num_colors,
-         ct.dataframe->num_cols);
-  pad(NAME_SPACE,0);
-  printf(" %s\n",TOP_LEFT_CORNER);
-  for (size_t i = 0; i < ct.dataframe->num_cols; i++) {
+         count.dataframe->num_cols);
+  pad(NAME_SPACE, 0);
+  printf(" %s\n", TOP_LEFT_CORNER);
+  for (size_t i = 0; i < count.dataframe->num_cols; i++) {
     // name of row
-    printf(" %s", ct.dataframe->columns[i].name);
+    printf(" %s", count.dataframe->columns[i].name);
     // pad size of name with total number of chars
-    
-    pad(NAME_SPACE,strlen(ct.dataframe->columns[i].name));
-    
+
+    pad(NAME_SPACE, strlen(count.dataframe->columns[i].name));
+
     printf(LEFT_TICK);
 
+    // Again, this is hardcoded due to the limit on the number of 3-bit
+    // terminal colors that are able to be displayed.
+    // NOLINTBEGIN(*-magic-numbers)
     switch (i % num_colors) {
     case 6:
       printf(MAG);
@@ -137,54 +154,32 @@ int display_count(Count ct, int num_colors) {
       printf(GRN);
       break;
     }
-    blocks(ct.numblocks[i]);
+    // NOLINTEND(*-magic-numbers)
+    blocks(count.numblocks[i]);
     printf(RESET);
     // value in row
-    // TODO: error catch incorrect format of data being handed off.
-    printf("  %f\n", ct.dataframe->columns[i].numbers[0]);
+    printf("  %f\n", count.dataframe->columns[i].numbers[0]);
   }
-  free(ct.numblocks);
-  pad(NAME_SPACE,0);
-  printf(" %s\n",BOTTOM_LEFT_CORNER);
+  free(count.numblocks);
+  pad(NAME_SPACE, 0);
+  printf(" %s\n", BOTTOM_LEFT_CORNER);
   return 0;
 }
-// TODO: explain this test case
+
 int main(void) {
+  float data_numbers[3] = {(float)30.0, (float)40.0, (float)33.5};
+  Series val1 = {.name = "Jon", .numbers = &data_numbers[0]};
+  Series val2 = {.name = "App", .numbers = &data_numbers[1]};
+  Series val3 = {.name = "Meg", .numbers = &data_numbers[2]};
+  Series* cols[3] = {&val1,&val2,&val3};
 
-  int nc = 4;
-  float o1 = 600;
-  float o2 = 200;
-  float o3 = 1400;
-  float o4 = 500;
+  // pass a pointer to the first element rather than the full array
+  // as expected by the function
+  Dataframe dataframe = {.columns = cols[0], .num_cols = 3, .num_rows = 1};
 
-  Series val1 = {
-      .name = "TESTtest",
-      .numbers = &o1,
-  };
-  Series val2 = {
-      .name = "JONATHAN",
-      .numbers = &o2,
-  };
-  Series val3 = {
-      .name = "JENNIFER",
-      .numbers = &o3,
-  };
-  Series val4 = {
-      .name = "LARRYLARRY",
-      .numbers = &o4,
-  };
+  Count ac_count = df_to_count(&dataframe);
 
-  Series* cols = (Series*) malloc(sizeof(Series) * 4);
-  cols[0] = val1;
-  cols[1] = val2;
-  cols[2] = val3;
-  cols[3] = val4;
-  Dataframe v = {.columns = cols, .num_cols = 4, .num_rows = 1};
+  display_count(ac_count, 4);
 
-  Count ct = df_to_count(&v);
-
-  display_count(ct, nc);
-  free(cols);
-
-  return 0;
+  //free(ac_count.numblocks);
 }

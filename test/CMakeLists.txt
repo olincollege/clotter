@@ -48,6 +48,7 @@ add_test(
 
 add_executable(test_countplot test_countplot.c)
 target_link_libraries(test_countplot
+  PRIVATE countplot
   PRIVATE array_helpers
   PUBLIC ${CRITERION}
   m
@@ -56,4 +57,28 @@ target_link_libraries(test_countplot
 add_test(
   NAME test_countplot
   COMMAND test_countplot ${CRITERION_FLAGS}
+)
+
+add_executable(test_datatypes test_datatypes.c)
+target_link_libraries(test_datatypes
+  PRIVATE data_types
+  PUBLIC ${CRITERION}
+  m
+)
+
+add_executable(test_count_rows test_count_rows.c)
+target_link_libraries(test_count_rows
+  PRIVATE csv2data
+  PUBLIC ${CRITERION}
+  m
+)
+
+add_test(
+  NAME check_destructor
+  COMMAND valgrind
+    --error-exitcode=1
+    --tool=memcheck
+    --leak-check=full
+    --errors-for-leak-kinds=definite  
+    --show-leak-kinds=definite ./test_datatypes
 )
