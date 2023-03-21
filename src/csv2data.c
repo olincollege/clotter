@@ -44,7 +44,6 @@ Dataframe* csv2arr(char* file_path) {
 
   // initialize Series pointer
   Series* series_pointer = (Series*)malloc(sp_size);
-
   // header flag to toggle b/w reading name and data
   int header_flag = 0;
 
@@ -64,32 +63,28 @@ Dataframe* csv2arr(char* file_path) {
     for(int i = 0; i < num_cols; i++){
       size_t float_array_size = num_rows*sizeof(float);
       size_t header_size = 20*sizeof(char);
-
       
-
+       
       fgets(buffer, BUFFER_SIZE, fp);
       char* token = strtok(buffer, ",");
       int num_count = 0;
-
-
+       
+      series_pointer[i].numbers = (float*)malloc(sizeof(float)*num_rows);
       while (token != NULL) {
         if(header_flag == 0){
           strcpy(series_pointer[i].name, token);
+          
           token = strtok(NULL, ","); // advance token to next value in column
           header_flag = 1;
         }
-
         series_pointer[i].numbers[num_count] = atof(token); // putting value into temp array
         token = strtok(NULL, ","); // advance token to next value in column
         num_count++;
         
       }
-
       header_flag = 0;
-
-
     }
-
+    
   }
 
   fclose(fp);
@@ -100,69 +95,10 @@ Dataframe* csv2arr(char* file_path) {
 
   df_pointer->columns = series_pointer;
   df_pointer->num_cols = num_cols;
-  df_pointer->num_rows;
+  df_pointer->num_rows = num_rows;
+  printf("COMPLETE DATAFRAME\n");
 
 
-
-  // // initialize Dataframe and number of rows
-  // // Dataframe output; 
-  
-  // // output.num_rows = count_csv_lines(file_path);
-  // // Series total_series[output.num_rows];
-  // int series_count = 0;
-
-  // else {
-  //   // make a char buffer to read data into
-  //   char buffer[BUFFER_SIZE];
-    
-  //   do {
-  //     // reads from file into buffer
-  //     fgets(buffer, BUFFER_SIZE, fp);
-
-  //     // actually breaks at the end of file
-  //     if(feof(fp)){
-  //       break;
-  //     }
-
-  //     char* token = strtok(buffer, ",");
-      
-  //     // sets Dataframe length if not initialized
-  //    // if(output.num_cols == NULL){
-  //    //   output.num_cols = strlen(token);
-  //    //   printf("B\n");
-  //    // }
-      
-  //     output.num_cols = strlen(token);
-  //   // initialize Series struct
-  //     Series s;
-      
-  //     float array[output.num_cols];
-    
-  //     int col_count = 0;
-  //     while (token != NULL) {
-  //       if(header_flag == 0){
-  //         strcpy(s.name, token);
-  //         token = strtok(NULL, ","); // advance token to next value in column
-  //         header_flag = 1;
-  //       }
-
-  //       array[col_count] = atof(token); // putting value into temp array
-  //       token = strtok(NULL, ","); // advance token to next value in column
-  //       col_count++;
-        
-  //     }
-
-  //     // reset header flag to recognize next row name
-  //     header_flag = 0;
-  //     s.numbers = array; // check &// assigning Series numbers object temp array
-
-  //     total_series[series_count] = s; // add series into Dataframe
-  //     series_count++;
-
-  //   } while (!feof(fp));
-  //   fclose(fp);
-  // }
-  // output.columns = total_series;
   return df_pointer;
 
 }
