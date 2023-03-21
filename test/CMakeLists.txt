@@ -1,4 +1,4 @@
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-conversion")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lbsd -Wno-conversion")
 
 add_executable(test_max test_max.c)
 target_link_libraries(test_max

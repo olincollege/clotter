@@ -111,27 +111,27 @@ static void blocks(int nblocks) {
   // NOLINTEND(*-magic-numbers)
 
   printf("%s", complement);
-  pad(PLOT_WIDTH, num_whole);
+  pad(PLOT_WIDTH, (size_t)num_whole);
 }
 
 int display_count(Count count, int num_colors) {
   printf("Number of colors: %i, Number of bars: %zu\n", num_colors,
          count.dataframe->num_cols);
-  pad(NAME_SPACE, 0);
+  pad(NAME_SPACE, (size_t)0);
   printf(" %s\n", TOP_LEFT_CORNER);
   for (size_t i = 0; i < count.dataframe->num_cols; i++) {
     // name of row
     printf(" %s", count.dataframe->columns[i].name);
     // pad size of name with total number of chars
 
-    pad(NAME_SPACE, strlen(count.dataframe->columns[i].name));
+    pad(NAME_SPACE, (size_t)strlen(count.dataframe->columns[i].name));
 
     printf(LEFT_TICK);
 
     // Again, this is hardcoded due to the limit on the number of 3-bit
     // terminal colors that are able to be displayed.
     // NOLINTBEGIN(*-magic-numbers)
-    switch (i % num_colors) {
+    switch ((int)i % num_colors) {
     case 6:
       printf(MAG);
       break;

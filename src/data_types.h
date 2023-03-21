@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 
-// TODO: Add unicode chars for blocks here, increase code readiblity
 typedef struct {
     // cap name at 20 characters for statc compile-time size
     char name[NAME_SPACE];
