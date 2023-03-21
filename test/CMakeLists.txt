@@ -66,6 +66,13 @@ target_link_libraries(test_datatypes
   m
 )
 
+add_executable(test_count_rows test_count_rows.c)
+target_link_libraries(test_count_rows
+  PRIVATE csv2data
+  PUBLIC ${CRITERION}
+  m
+)
+
 add_test(
   NAME check_destructor
   COMMAND valgrind
@@ -73,5 +80,6 @@ add_test(
     --tool=memcheck
     --leak-check=full
     --errors-for-leak-kinds=definite  
-    --show-leak-kinds=definite ./test_datatypes
+    --show-leak-kinds=definite
+    --trace-children=yes ./test_datatypes
 )
