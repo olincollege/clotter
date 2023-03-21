@@ -165,3 +165,21 @@ int display_count(Count count, int num_colors) {
   printf(" %s\n", BOTTOM_LEFT_CORNER);
   return 0;
 }
+
+int main(void) {
+  float data_numbers[3] = {(float)30.0, (float)40.0, (float)33.5};
+  Series val1 = {.name = "Jon", .numbers = &data_numbers[0]};
+  Series val2 = {.name = "App", .numbers = &data_numbers[1]};
+  Series val3 = {.name = "Meg", .numbers = &data_numbers[2]};
+  Series* cols[3] = {&val1,&val2,&val3};
+
+  // pass a pointer to the first element rather than the full array
+  // as expected by the function
+  Dataframe dataframe = {.columns = cols[0], .num_cols = 3, .num_rows = 1};
+
+  Count ac_count = df_to_count(&dataframe);
+
+  display_count(ac_count, 4);
+
+  //free(ac_count.numblocks);
+}
