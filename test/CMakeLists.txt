@@ -33,3 +33,45 @@ add_test(
   NAME test_mean
   COMMAND test_mean ${CRITERION_FLAGS}
 )
+
+add_executable(test_max_scalar test_max_scalar.c)
+target_link_libraries(test_max_scalar
+  PRIVATE array_helpers
+  PUBLIC ${CRITERION}
+  m
+)
+
+add_test(
+  NAME test_max_scalar
+  COMMAND test_max_scalar ${CRITERION_FLAGS}
+)
+
+add_executable(test_countplot test_countplot.c)
+target_link_libraries(test_countplot
+  PRIVATE countplot
+  PRIVATE array_helpers
+  PUBLIC ${CRITERION}
+  m
+)
+
+add_test(
+  NAME test_countplot
+  COMMAND test_countplot ${CRITERION_FLAGS}
+)
+
+add_executable(test_datatypes test_datatypes.c)
+target_link_libraries(test_datatypes
+  PRIVATE data_types
+  PUBLIC ${CRITERION}
+  m
+)
+
+add_test(
+  NAME check_destructor
+  COMMAND valgrind
+    --error-exitcode=1
+    --tool=memcheck
+    --leak-check=full
+    --errors-for-leak-kinds=definite  
+    --show-leak-kinds=definite ./test_datatypes
+)

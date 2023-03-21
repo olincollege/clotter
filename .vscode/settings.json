@@ -1,5 +1,5 @@
 {
   "files.associations": {
-    "csv2data.h": "c"
+    "sstream": "c"
   }
 }
