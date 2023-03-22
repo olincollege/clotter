@@ -4,18 +4,36 @@
   </p>
 </div>
 
-# clotter
+# Clotter
 
 Clotter is a terminal based plotter, written in C. Improve your efficiency by
 quicky analyzing trends in data without booting up Matlab or writing a pesky
 Python script.
 
-## Installation/Dependencies
+## Dependencies
 
 You will need the following on your system:
 
 - Criterion
 - A terminal capable of displaying TTF Unicode characters
+
+## Installation
+
+1. Clone this repo onto your machine:
+```
+git clone https://github.com/olincollege/clotter.git
+```
+
+2. Move into the directory and create a build directory:
+
+```
+cd clotter && mkdir build
+```
+3. Move into build directory, Cmake & make:
+```
+cd build && cmake ..
+make
+```
 
 ## Usage
 
