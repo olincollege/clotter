@@ -39,7 +39,7 @@ make
 
 Clotter comes with a number of flags to specify options:
 
-- _-t_ specifies plot type
+- _-t_ specifies plot type (currently not used, due to only one plot type being available)
 - _-f_ specifies file path, from the current directory
 - _-c_ specifies the number of colors to use (somewhat dependent on how you have
   your terminal configured)
