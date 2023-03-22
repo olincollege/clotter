@@ -1,6 +1,7 @@
 #include "countplot.h"
 #include "csv2data.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 /*
@@ -29,7 +30,7 @@ int main(int argc, char *argv[]) {
           
           // number of colors to be used
           case 'c':
-              num_colors = (atoi(optarg));
+              num_colors = (int)(strtol(optarg,NULL,10));
               break;
 
           // type of plot desired by user

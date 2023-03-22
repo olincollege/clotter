@@ -1,15 +1,16 @@
 #include "constants.h"
 #include "csv2data.h"
 #include "data_types.h"
+#include <stdlib.h>
 
 #include <stdio.h>
 #include <string.h>
 
 int count_csv_lines(char* file_path){
   FILE* fop = fopen(file_path, "re");
-  char next_char = '0';
+  signed char next_char = '0';
   int count = 0;
-  for (next_char = getc(fop); next_char != EOF; next_char = getc(fop))
+  for (next_char = (signed char)getc(fop); next_char != EOF; next_char = (signed char)getc(fop))
         if (next_char == '\n') // Increment count if this character is newline
             count++;
 
@@ -19,7 +20,7 @@ int count_csv_lines(char* file_path){
 }
 
 int count_row_length(char* file_path){
-  int row_length = -1;
+  size_t row_length = 1;
   FILE* fop = fopen(file_path, "re");
   char buffer[BUFFER_SIZE];
 
@@ -77,7 +78,7 @@ Dataframe* csv2arr(char* file_path) {
           token = strtok(NULL, ","); // advance token to next value in column
           header_flag = 1;
         }
-        series_pointer[i].numbers[num_count] = (float)atof(token); // putting value into temp array
+        series_pointer[i].numbers[num_count] = strtof(token, NULL); // putting value into temp array
         token = strtok(NULL, ","); // advance token to next value in column
         num_count++;
         
@@ -94,8 +95,8 @@ Dataframe* csv2arr(char* file_path) {
   Dataframe* df_pointer = (Dataframe*)malloc(data_frame_size);
 
   df_pointer->columns = series_pointer;
-  df_pointer->num_cols = num_cols;
-  df_pointer->num_rows = num_rows;
+  df_pointer->num_cols = (size_t)num_cols;
+  df_pointer->num_rows = (size_t)num_rows;
 
 
   return df_pointer;
