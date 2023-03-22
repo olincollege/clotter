@@ -160,7 +160,6 @@ int display_count(Count count, int num_colors) {
     // value in row
     printf("  %f\n", count.dataframe->columns[i].numbers[0]);
   }
-  free(count.numblocks);
   pad(NAME_SPACE, 0);
   printf(" %s\n", BOTTOM_LEFT_CORNER);
   return 0;

@@ -15,3 +15,8 @@ target_link_libraries(countplot data_types array_helpers m)
 target_link_libraries(main array_helpers)
 target_link_libraries(main csv2data)
 target_link_libraries(main countplot)
+target_link_libraries(main m)
+
+
+
+
