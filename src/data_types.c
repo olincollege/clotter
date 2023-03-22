@@ -1,5 +1,3 @@
-#pragma once
-
 #include "constants.h"
 #include "data_types.h"
 
@@ -12,6 +10,13 @@ int dataframe_free(Dataframe* dataframe) {
 
   free(dataframe->columns);
   free(dataframe);
+
+  return 0;
+}
+
+int count_free(Count* count) {
+  free(count->numblocks);
+  dataframe_free(count->dataframe);
 
   return 0;
 }
