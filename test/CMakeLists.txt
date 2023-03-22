@@ -92,5 +92,6 @@ add_test(
     --tool=memcheck
     --leak-check=full
     --errors-for-leak-kinds=definite  
-    --show-leak-kinds=definite ./test_datatypes
+    --show-leak-kinds=definite
+    --trace-children=yes ./test_datatypes
 )

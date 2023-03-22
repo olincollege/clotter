@@ -4,6 +4,8 @@
 #include <criterion/new/assert.h>
 
 // NOLINTBEGIN(*-magic-numbers)
+// Test if the destructor actually frees memory successfully.
+// Uses Valgrind.
 Test(dataframe_free, simple_success) {
 
   size_t NUM_COLS = 3;

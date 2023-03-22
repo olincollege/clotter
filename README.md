@@ -28,6 +28,8 @@ Clotter comes with a number of flags to specify options:
 
 A call to clotter might look something like this:
 
-`./clotter -f “/path/to/file.csv” -t countplot -c 3`
+`./clotter -f /path/to/file.csv -t countplot -c 3`
+
+Please do not put quotation marks around the file path. This will break things. 
 
 ## Limitations
