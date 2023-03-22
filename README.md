@@ -30,6 +30,8 @@ A call to clotter might look something like this:
 
 `./clotter -f /path/to/file.csv -t countplot -c 3`
 
+This should result in a graph that uses 3 terminal colors, like this:
+
 <div>
   <p align="center">
     <img src="pictures/threecolorsclotter.png" width="800"> 
