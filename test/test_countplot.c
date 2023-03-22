@@ -6,8 +6,7 @@
 
 #include <stdlib.h>
 
-// NOLINTBEGIN(*-magic-numbers)
-
+// NOLINTBEGIN
 // Test that the functions returns the proper block widths for a
 // "normal" batch of inputs.
 Test(df_to_count, standard_inputs) {
@@ -32,6 +31,4 @@ Test(df_to_count, standard_inputs) {
 
   free(ac_count.numblocks);
 }
-
-
-// NOLINTEND(*-magic-numbers)
+// NOLINTEND
