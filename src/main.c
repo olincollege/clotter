@@ -9,27 +9,30 @@ getopt stuff copied from here:
 https://www.tutorialspoint.com/getopt-function-in-c-to-parse-command-line-arguments
 */
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char* argv[]) {
   // setting vars to write all arguments into
+  // NOLINTBEGIN(*-init-variables)
   char* file_path;
   char* plot_type;
   int num_colors;
+  // NOLINTEND(*-init-variables)
 
   // need to set flags so we don't get a seg-fault if we try to read a value of 
   // an optional arg that was not given
   int fflag = 0;
-  int cflag = 0;
   int tflag = 0;
 
   extern char *optarg;
   extern int optind;
   int option;
+  
   // put ':' at the starting of the string so compiler can distinguish between '?' and ':'
   while((option = getopt(argc, argv, "c:f:t:")) != -1){ //get option from the getopt() method
       switch(option){
-          
+
           // number of colors to be used
           case 'c':
+              // NOLINTNEXTLINE(*-magic-numbers)
               num_colors = (int)(strtol(optarg,NULL,10));
               break;
 
@@ -66,7 +69,7 @@ int main(int argc, char *argv[]) {
   }
   
   Dataframe *csvdata = csv2arr(file_path);
-  Count c = df_to_count(csvdata);
-  display_count(c,num_colors);
-  count_free(&c);
+  Count count = df_to_count(csvdata);
+  display_count(count, num_colors);
+  count_free(&count);
 }
