@@ -7,7 +7,7 @@
 # Clotter
 
 Clotter is a terminal based plotter, written in C. Improve your efficiency by
-quicky analyzing trends in data without booting up Matlab or writing a pesky
+quickly analyzing trends in data without booting up MatLab or writing a pesky
 Python script.
 
 ## Dependencies
