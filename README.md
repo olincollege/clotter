@@ -30,6 +30,12 @@ A call to clotter might look something like this:
 
 `./clotter -f /path/to/file.csv -t countplot -c 3`
 
+<div>
+  <p align="center">
+    <img src="pictures/singlecolorclotter.PNG" width="800"> 
+  </p>
+</div>
+
 Please do not put quotation marks around the file path. This will break things. 
 
 ## Limitations
