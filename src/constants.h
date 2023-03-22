@@ -33,4 +33,5 @@
 enum {
   PLOT_WIDTH = 80,
   NAME_SPACE = 20,
+  BUFFER_SIZE = 1024,
 };

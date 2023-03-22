@@ -1,4 +1,4 @@
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-conversion")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lbsd -Wno-conversion")
 
 add_executable(test_max test_max.c)
 target_link_libraries(test_max
@@ -62,13 +62,16 @@ add_test(
 add_executable(test_datatypes test_datatypes.c)
 target_link_libraries(test_datatypes
   PRIVATE data_types
+  PRIVATE countplot
+  PRIVATE array_helpers
   PUBLIC ${CRITERION}
   m
 )
 
 add_executable(test_count_rows test_count_rows.c)
 target_link_libraries(test_count_rows
-  PRIVATE csv2data m
+  PRIVATE csv2data 
+  PRIVATE m
   PUBLIC ${CRITERION}
   
 )
@@ -86,7 +89,7 @@ target_link_libraries(test_count_row_length
 )
 
 add_test(
-  NAME check_destructor
+  NAME test_destructors
   COMMAND valgrind
     --error-exitcode=1
     --tool=memcheck

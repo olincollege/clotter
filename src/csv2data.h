@@ -3,8 +3,9 @@
  */
 #pragma once
 
-#include <string.h>
 #include "data_types.h"
+#include <string.h>
+static const char WHITESPACE[] = " \f\n\r\t\v";
 
 /**
  * Counts the number of rows in a .csv by iterating through the entire file

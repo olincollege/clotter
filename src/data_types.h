@@ -4,7 +4,6 @@
 
 #include <stdlib.h>
 
-// TODO: Add unicode chars for blocks here, increase code readiblity
 typedef struct {
     // cap name at 20 characters for statc compile-time size
     char name[NAME_SPACE];
@@ -20,11 +19,11 @@ typedef struct {
 
 int dataframe_free(Dataframe* dataframe);
 
-// WARNING: numblocks is allocated when df_to_count is called, and it should
-// be freed when it is done being used.
 typedef struct {
     Dataframe* dataframe;
     int* numblocks; // array containing number of 1/8 character-width blocks to plot
     // this array has length dataframe.num_cols
     // Additional peripheral values should be added to this struct such as plot name, colors
 } Count;
+
+int count_free(Count* count);
