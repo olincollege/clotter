@@ -14,8 +14,9 @@ Python script.
 
 You will need the following on your system:
 
-- Criterion
+- Criterion >= 2.4.1
 - A terminal capable of displaying TTF Unicode characters
+- Ideally a monospaced font
 
 ## Installation
 
