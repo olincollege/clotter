@@ -14,6 +14,13 @@ int dataframe_free(Dataframe* dataframe) {
   return 0;
 }
 
+int count_free(Count* count) {
+  free(count->numblocks);
+  dataframe_free(count->dataframe);
+
+  return 0;
+}
+
 /*// TODO: Add unicode chars for blocks here, increase code readiblity
 typedef struct {
     // cap name at 20 characters for statc compile-time size

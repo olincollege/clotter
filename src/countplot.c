@@ -1,7 +1,7 @@
 #include "array_helpers.h"
 #include "constants.h"
-#include "data_types.h"
 #include "countplot.h"
+#include "data_types.h"
 
 #include <ctype.h>
 #include <math.h>
@@ -111,27 +111,27 @@ static void blocks(int nblocks) {
   // NOLINTEND(*-magic-numbers)
 
   printf("%s", complement);
-  pad(PLOT_WIDTH, num_whole);
+  pad(PLOT_WIDTH, (size_t)num_whole);
 }
 
 int display_count(Count count, int num_colors) {
   printf("Number of colors: %i, Number of bars: %zu\n", num_colors,
          count.dataframe->num_cols);
-  pad(NAME_SPACE, 0);
+  pad(NAME_SPACE, (size_t)0);
   printf(" %s\n", TOP_LEFT_CORNER);
   for (size_t i = 0; i < count.dataframe->num_cols; i++) {
     // name of row
     printf(" %s", count.dataframe->columns[i].name);
     // pad size of name with total number of chars
 
-    pad(NAME_SPACE, strlen(count.dataframe->columns[i].name));
+    pad(NAME_SPACE, (size_t)strlen(count.dataframe->columns[i].name));
 
     printf(LEFT_TICK);
 
     // Again, this is hardcoded due to the limit on the number of 3-bit
     // terminal colors that are able to be displayed.
     // NOLINTBEGIN(*-magic-numbers)
-    switch (i % num_colors) {
+    switch ((int)i % num_colors) {
     case 6:
       printf(MAG);
       break;
@@ -160,26 +160,7 @@ int display_count(Count count, int num_colors) {
     // value in row
     printf("  %f\n", count.dataframe->columns[i].numbers[0]);
   }
-  free(count.numblocks);
   pad(NAME_SPACE, 0);
   printf(" %s\n", BOTTOM_LEFT_CORNER);
   return 0;
-}
-
-int main(void) {
-  float data_numbers[3] = {(float)30.0, (float)40.0, (float)33.5};
-  Series val1 = {.name = "Jon", .numbers = &data_numbers[0]};
-  Series val2 = {.name = "App", .numbers = &data_numbers[1]};
-  Series val3 = {.name = "Meg", .numbers = &data_numbers[2]};
-  Series* cols[3] = {&val1,&val2,&val3};
-
-  // pass a pointer to the first element rather than the full array
-  // as expected by the function
-  Dataframe dataframe = {.columns = cols[0], .num_cols = 3, .num_rows = 1};
-
-  Count ac_count = df_to_count(&dataframe);
-
-  display_count(ac_count, 4);
-
-  //free(ac_count.numblocks);
 }
