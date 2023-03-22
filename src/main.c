@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
           
           // number of colors to be used
           case 'c':
-              //num_colors = (atoi(optarg));
+              num_colors = (atoi(optarg));
               break;
 
           // type of plot desired by user
