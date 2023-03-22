@@ -96,7 +96,6 @@ Dataframe* csv2arr(char* file_path) {
   df_pointer->columns = series_pointer;
   df_pointer->num_cols = num_cols;
   df_pointer->num_rows = num_rows;
-  printf("COMPLETE DATAFRAME\n");
 
 
   return df_pointer;
