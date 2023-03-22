@@ -6,7 +6,7 @@
 #include <string.h>
 
 int count_csv_lines(char* file_path){
-  FILE* fop = fopen(file_path, "r");
+  FILE* fop = fopen(file_path, "re");
   char next_char = '0';
   int count = 0;
   for (next_char = getc(fop); next_char != EOF; next_char = getc(fop))
@@ -20,7 +20,7 @@ int count_csv_lines(char* file_path){
 
 int count_row_length(char* file_path){
   int row_length = -1;
-  FILE* fop = fopen(file_path, "r");
+  FILE* fop = fopen(file_path, "re");
   char buffer[BUFFER_SIZE];
 
   fgets(buffer, BUFFER_SIZE, fop);
@@ -48,7 +48,7 @@ Dataframe* csv2arr(char* file_path) {
   int header_flag = 0;
 
   // initialize a file pointer to the csv
-  FILE* fop = fopen(file_path, "r");
+  FILE* fop = fopen(file_path, "re");
 
   // some error checking if it can't find the file
   if (!fop){
