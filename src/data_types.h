@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 typedef struct {
-    // cap name at 20 characters for statc compile-time size
     char name[NAME_SPACE];
     float* numbers;
 } Series;
