@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
   }
   
   Dataframe *csvdata = csv2arr(file_path);
-  Count count = df_to_count(csvdata);
-  display_count(count, 4);
-  count_free(&count);
+  Count c = df_to_count(csvdata);
+  display_count(c,num_colors);
+  count_free(&c);
 }
