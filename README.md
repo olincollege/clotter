@@ -1,10 +1,9 @@
-# clotter
-
 <div>
   <p align="center">
-    <img src="pictures/clotter.PNG" width="200"> 
+    <img src="pictures/clotter.png" width="800"> 
   </p>
 </div>
+# clotter
 
 Clotter is a terminal based plotter, written in C. Improve your efficiency by
 quicky analyzing trends in data without booting up Matlab or writing a pesky
@@ -29,6 +28,14 @@ Clotter comes with a number of flags to specify options:
 A call to clotter might look something like this:
 
 `./clotter -f /path/to/file.csv -t countplot -c 3`
+
+This should result in a graph that uses 3 terminal colors, like this:
+
+<div>
+  <p align="center">
+    <img src="pictures/threecolorsclotter.png" width="800"> 
+  </p>
+</div>
 
 Please do not put quotation marks around the file path. This will break things. 
 
