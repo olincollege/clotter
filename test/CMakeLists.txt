@@ -68,6 +68,26 @@ target_link_libraries(test_datatypes
   m
 )
 
+add_executable(test_count_rows test_count_rows.c)
+target_link_libraries(test_count_rows
+  PRIVATE csv2data 
+  PRIVATE m
+  PUBLIC ${CRITERION}
+  
+)
+
+add_test(
+  NAME test_count_rows
+  COMMAND test_count_rows ${CRITERION_FLAGS}
+)
+
+add_executable(test_count_row_length test_count_row_length.c)
+target_link_libraries(test_count_row_length
+  PRIVATE csv2data
+  PUBLIC ${CRITERION}
+  
+)
+
 add_test(
   NAME test_destructors
   COMMAND valgrind
@@ -77,11 +97,4 @@ add_test(
     --errors-for-leak-kinds=definite  
     --show-leak-kinds=definite
     --trace-children=yes ./test_datatypes
-)
-
-add_executable(test_count_rows test_count_rows.c)
-target_link_libraries(test_count_rows
-  PRIVATE csv2data
-  PUBLIC ${CRITERION}
-  m
 )
