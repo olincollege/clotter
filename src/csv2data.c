@@ -10,11 +10,14 @@ int count_csv_lines(char* file_path){
   FILE* fop = fopen(file_path, "re");
   signed char next_char = '0';
   int count = 0;
-  for (next_char = (signed char)getc(fop); next_char != EOF; next_char = (signed char)getc(fop))
-        if (next_char == '\n') // Increment count if this character is newline
+  for (next_char = (signed char)getc(fop); next_char != EOF; next_char = (signed char)getc(fop)){
+        if (next_char == '\n'){ // Increment count if this character is newline
             count++;
+        }
 
-  fclose(fop);
+  }
+
+  (void)fclose(fop);
 
   return count;
 }
@@ -24,11 +27,11 @@ int count_row_length(char* file_path){
   FILE* fop = fopen(file_path, "re");
   char buffer[BUFFER_SIZE];
 
-  fgets(buffer, BUFFER_SIZE, fop);
+  (void)fgets(buffer, BUFFER_SIZE, fop);
   char* token = strtok(buffer, ",");
   row_length = strlen(token);
 
-  fclose(fop);
+  (void)fclose(fop);
 
   return (int)row_length; 
 }
@@ -41,6 +44,7 @@ Dataframe* csv2arr(char* file_path) {
   int num_rows = count_row_length(file_path);
 
   // size of Series pointer to malloc
+  // NOLINTNEXTLINE(*-magic-numbers)
   size_t sp_size = ((size_t)num_rows*sizeof(float) + 20*sizeof(char)) * (size_t)num_cols;
 
   // initialize Series pointer
@@ -66,7 +70,7 @@ Dataframe* csv2arr(char* file_path) {
       size_t header_size = 20*sizeof(char);
       
        
-      fgets(buffer, BUFFER_SIZE, fop);
+      (void)fgets(buffer, BUFFER_SIZE, fop);
       char* token = strtok(buffer, ",");
       int num_count = 0;
        
