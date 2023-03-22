@@ -57,6 +57,14 @@ This should result in a graph that uses 3 terminal colors, like this:
   </p>
 </div>
 
-Please do not put quotation marks around the file path. This will break things. 
-
 ## Limitations
+Some of our limitations are by design.
+- This program was designed on Linux and is intended for use on Linux systems. You can maybe run it in other places, but YMMV and it's not tested.
+- CSV data titles are limited to 20 characters by default. This is for terminal display purposes. This is a constant that can be adjusted in `constants.h`.
+
+This is a student project, and there are some limitations that aren't by design.
+- Error-handling in general is not quite there: for example, the count plot does not display negative values in an acceptable manner, but those are not handled or checked for.
+- If you put quotes around the filename, the program segfaults.
+- If you specify that there should be zero colors, the program segfaults.
+- If a CSV data title has more than 20 characters (or whatever you changed the default to), the program segfaults.
+- We want to include more plot types, but are currently limited to count plots.
