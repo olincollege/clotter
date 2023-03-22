@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
       printf("path to csv: %s\n", file_path);
   }
   Dataframe *csvdata = csv2arr(file_path);
-  Count c = df_to_count(csvdata);
-  display_count(c,4);
+  Count count = df_to_count(csvdata);
+  display_count(count, 4);
   //count_free(&c);
 }

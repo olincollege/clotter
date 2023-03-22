@@ -6,28 +6,28 @@
 #include <string.h>
 
 int count_csv_lines(char* file_path){
-  FILE* fp = fopen(file_path, "r");
-  char c = '0';
+  FILE* fop = fopen(file_path, "r");
+  char next_char = '0';
   int count = 0;
-  for (c = getc(fp); c != EOF; c = getc(fp))
-        if (c == '\n') // Increment count if this character is newline
+  for (next_char = getc(fop); next_char != EOF; next_char = getc(fop))
+        if (next_char == '\n') // Increment count if this character is newline
             count++;
 
-  fclose(fp);
+  fclose(fop);
 
   return count;
 }
 
 int count_row_length(char* file_path){
   int row_length = -1;
-  FILE* fp = fopen(file_path, "r");
+  FILE* fop = fopen(file_path, "r");
   char buffer[BUFFER_SIZE];
 
-  fgets(buffer, BUFFER_SIZE, fp);
+  fgets(buffer, BUFFER_SIZE, fop);
   char* token = strtok(buffer, ",");
   row_length = strlen(token);
 
-  fclose(fp);
+  fclose(fop);
 
   return row_length; 
 }
@@ -48,10 +48,10 @@ Dataframe* csv2arr(char* file_path) {
   int header_flag = 0;
 
   // initialize a file pointer to the csv
-  FILE* fp = fopen(file_path, "r");
+  FILE* fop = fopen(file_path, "r");
 
   // some error checking if it can't find the file
-  if (!fp){
+  if (!fop){
     printf("Can't open file\n");
     
   }
@@ -65,7 +65,7 @@ Dataframe* csv2arr(char* file_path) {
       size_t header_size = 20*sizeof(char);
       
        
-      fgets(buffer, BUFFER_SIZE, fp);
+      fgets(buffer, BUFFER_SIZE, fop);
       char* token = strtok(buffer, ",");
       int num_count = 0;
        
@@ -87,7 +87,7 @@ Dataframe* csv2arr(char* file_path) {
     
   }
 
-  fclose(fp);
+  fclose(fop);
 
   size_t data_frame_size = 2*sizeof(size_t) + sizeof(Series*);
 
