@@ -1,6 +1,6 @@
+#include "countplot.h"
 #include "array_helpers.h"
 #include "constants.h"
-#include "countplot.h"
 #include "data_types.h"
 
 #include <ctype.h>

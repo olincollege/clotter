@@ -1,5 +1,5 @@
-#include "constants.h"
 #include "data_types.h"
+#include "constants.h"
 
 #include <stdlib.h>
 
@@ -20,4 +20,3 @@ int count_free(Count* count) {
 
   return 0;
 }
-

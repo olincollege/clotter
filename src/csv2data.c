@@ -1,20 +1,20 @@
-#include "constants.h"
 #include "csv2data.h"
+#include "constants.h"
 #include "data_types.h"
 #include <stdlib.h>
 
 #include <stdio.h>
 #include <string.h>
 
-int count_csv_lines(char* file_path){
+int count_csv_lines(char* file_path) {
   FILE* fop = fopen(file_path, "re");
   signed char next_char = '0';
   int count = 0;
-  for (next_char = (signed char)getc(fop); next_char != EOF; next_char = (signed char)getc(fop)){
-        if (next_char == '\n'){ // Increment count if this character is newline
-            count++;
-        }
-
+  for (next_char = (signed char)getc(fop); next_char != EOF;
+       next_char = (signed char)getc(fop)) {
+    if (next_char == '\n') { // Increment count if this character is newline
+      count++;
+    }
   }
 
   (void)fclose(fop);
@@ -22,7 +22,7 @@ int count_csv_lines(char* file_path){
   return count;
 }
 
-int count_row_length(char* file_path){
+int count_row_length(char* file_path) {
   size_t row_length = 1;
   FILE* fop = fopen(file_path, "re");
   char buffer[BUFFER_SIZE];
@@ -33,7 +33,7 @@ int count_row_length(char* file_path){
 
   (void)fclose(fop);
 
-  return (int)row_length; 
+  return (int)row_length;
 }
 
 Dataframe* csv2arr(char* file_path) {
@@ -45,7 +45,8 @@ Dataframe* csv2arr(char* file_path) {
 
   // size of Series pointer to malloc
   // NOLINTNEXTLINE(*-magic-numbers)
-  size_t sp_size = ((size_t)num_rows*sizeof(float) + 20*sizeof(char)) * (size_t)num_cols;
+  size_t sp_size =
+      ((size_t)num_rows * sizeof(float) + 20 * sizeof(char)) * (size_t)num_cols;
 
   // initialize Series pointer
   Series* series_pointer = (Series*)malloc(sp_size);
@@ -56,45 +57,43 @@ Dataframe* csv2arr(char* file_path) {
   FILE* fop = fopen(file_path, "re");
 
   // some error checking if it can't find the file
-  if (!fop){
+  if (!fop) {
     printf("Can't open file\n");
-    
-  }
-  else{
+
+  } else {
     // creating buffer for reading csv
     char buffer[BUFFER_SIZE];
 
     // reading csv based on how many lines it has
-    for(int i = 0; i < num_cols; i++){
-      size_t float_array_size = (size_t)num_rows*sizeof(float);
-      size_t header_size = 20*sizeof(char);
-      
-       
+    for (int i = 0; i < num_cols; i++) {
+      size_t float_array_size = (size_t)num_rows * sizeof(float);
+      size_t header_size = 20 * sizeof(char);
+
       (void)fgets(buffer, BUFFER_SIZE, fop);
       char* token = strtok(buffer, ",");
       int num_count = 0;
-       
-      series_pointer[i].numbers = (float*)malloc(sizeof(float)*(size_t)num_rows);
+
+      series_pointer[i].numbers =
+          (float*)malloc(sizeof(float) * (size_t)num_rows);
       while (token != NULL) {
-        if(header_flag == 0){
+        if (header_flag == 0) {
           strcpy(series_pointer[i].name, token);
-          
+
           token = strtok(NULL, ","); // advance token to next value in column
           header_flag = 1;
         }
-        series_pointer[i].numbers[num_count] = strtof(token, NULL); // putting value into temp array
+        series_pointer[i].numbers[num_count] =
+            strtof(token, NULL);   // putting value into temp array
         token = strtok(NULL, ","); // advance token to next value in column
         num_count++;
-        
       }
       header_flag = 0;
     }
-    
   }
 
   fclose(fop);
 
-  size_t data_frame_size = 2*sizeof(size_t) + sizeof(Series*);
+  size_t data_frame_size = 2 * sizeof(size_t) + sizeof(Series*);
 
   Dataframe* df_pointer = (Dataframe*)malloc(data_frame_size);
 
@@ -102,7 +101,5 @@ Dataframe* csv2arr(char* file_path) {
   df_pointer->num_cols = (size_t)num_cols;
   df_pointer->num_rows = (size_t)num_rows;
 
-
   return df_pointer;
-
 }
