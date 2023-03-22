@@ -32,7 +32,7 @@ A call to clotter might look something like this:
 
 <div>
   <p align="center">
-    <img src="pictures/singlecolorclotter.PNG" width="800"> 
+    <img src="pictures/singlecolorclotter.png" width="800"> 
   </p>
 </div>
 
