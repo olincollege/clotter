@@ -3,7 +3,7 @@
     <img src="pictures/clotter.png" width="800"> 
   </p>
 </div>
-#clotter
+# clotter
 
 Clotter is a terminal based plotter, written in C. Improve your efficiency by
 quicky analyzing trends in data without booting up Matlab or writing a pesky
