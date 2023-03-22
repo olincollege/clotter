@@ -1,11 +1,9 @@
+#include "constants.h"
 #include "csv2data.h"
 #include "data_types.h"
 
-
 #include <stdio.h>
 #include <string.h>
-
-#define BUFFER_SIZE 1024
 
 int count_csv_lines(char* file_path){
   FILE* fp = fopen(file_path, "r");
