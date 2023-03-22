@@ -74,7 +74,7 @@ target_link_libraries(test_count_rows
 )
 
 add_test(
-  NAME check_destructor
+  NAME test_destructors
   COMMAND valgrind
     --error-exitcode=1
     --tool=memcheck
