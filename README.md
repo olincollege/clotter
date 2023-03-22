@@ -1,7 +1,7 @@
 # clotter
 
 <div>
-  <p align="center">
+  <p align="left">
     <img src="pictures/clotter.PNG" width="200"> 
   </p>
 </div>
