@@ -3,8 +3,9 @@
  */
 #pragma once
 
-#include <string.h>
 #include "data_types.h"
+
+#include <string.h>
 static const char WHITESPACE[] = " \f\n\r\t\v";
 
 /**
