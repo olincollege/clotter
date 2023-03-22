@@ -9,9 +9,9 @@
 
 int count_csv_lines(char* file_path){
   FILE* fp = fopen(file_path, "r");
-  char c = '0';
+  signed char c = '0';
   int count = 0;
-  for (c = getc(fp); c != EOF; c = getc(fp))
+  for (c = (signed char)getc(fp); c != EOF; c = (signed char)getc(fp))
         if (c == '\n') // Increment count if this character is newline
             count++;
 
@@ -21,7 +21,7 @@ int count_csv_lines(char* file_path){
 }
 
 int count_row_length(char* file_path){
-  int row_length = -1;
+  size_t row_length = 1;
   FILE* fp = fopen(file_path, "r");
   char buffer[BUFFER_SIZE];
 
@@ -31,7 +31,7 @@ int count_row_length(char* file_path){
 
   fclose(fp);
 
-  return row_length; 
+  return (int)row_length; 
 }
 
 Dataframe* csv2arr(char* file_path) {
@@ -42,7 +42,7 @@ Dataframe* csv2arr(char* file_path) {
   int num_rows = count_row_length(file_path);
 
   // size of Series pointer to malloc
-  size_t sp_size = (num_rows*sizeof(float) + 20*sizeof(char)) * num_cols;
+  size_t sp_size = ((size_t)num_rows*sizeof(float) + 20*sizeof(char)) * (size_t)num_cols;
 
   // initialize Series pointer
   Series* series_pointer = (Series*)malloc(sp_size);
@@ -63,7 +63,7 @@ Dataframe* csv2arr(char* file_path) {
 
     // reading csv based on how many lines it has
     for(int i = 0; i < num_cols; i++){
-      size_t float_array_size = num_rows*sizeof(float);
+      size_t float_array_size = (size_t)num_rows*sizeof(float);
       size_t header_size = 20*sizeof(char);
       
        
@@ -71,7 +71,7 @@ Dataframe* csv2arr(char* file_path) {
       char* token = strtok(buffer, ",");
       int num_count = 0;
        
-      series_pointer[i].numbers = (float*)malloc(sizeof(float)*num_rows);
+      series_pointer[i].numbers = (float*)malloc(sizeof(float)*(size_t)num_rows);
       while (token != NULL) {
         if(header_flag == 0){
           strcpy(series_pointer[i].name, token);
@@ -79,7 +79,7 @@ Dataframe* csv2arr(char* file_path) {
           token = strtok(NULL, ","); // advance token to next value in column
           header_flag = 1;
         }
-        series_pointer[i].numbers[num_count] = atof(token); // putting value into temp array
+        series_pointer[i].numbers[num_count] = (float)atof(token); // putting value into temp array
         token = strtok(NULL, ","); // advance token to next value in column
         num_count++;
         
