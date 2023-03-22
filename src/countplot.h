@@ -1,16 +1,20 @@
-#include "../src/data_types.h"
-
 #pragma once
 
+#include "../src/data_types.h"
+
 /*
- * Plots a Count plot in the terminal from given data in a series struct.
+ * Plots a Count plot in the terminal from given data in a Dataframe struct.
  *
- * Program takes an array of series structs, for each row in the data that was 
- * interpreted. Looping through this array, each row of the plot is built; printing
- * the name, relative size of the value, and the real value. 
+ * Takes the number of 1/8 character Unicode blocks from the Count object
+ * and plots that number of blocks. Names for each row and actual values are
+ * taken from the Dataframe object that Count stores a pointer to.
  *
- * @param values array of Series structs corresponding to each row of data
+ * num_colors should never be zero.
+ *  
+ * @param count A Count struct that contains plotting information and the data.
+ * @param num_colors The number of different colors the plot uses.
  *
+ * @return An integer 0 if the program was successful and 1 if it was not. 
  */
 int display_count(Count count, int num_colors);
 
@@ -20,6 +24,11 @@ int display_count(Count count, int num_colors);
  * necessary to determine the number of 1/8 Unicode blocks to plot the data
  * in the terminal.
  *
+ * The Dataframe object is not consumed or changed, and the Count object that
+ * is returned contains the same pointer to the Dataframe.
+ *
  * @param dataframe A pointer to the dataframe to be analyzed.
+ * 
+ * @return A Count object containing information needed to display a count plot.
  */
 Count df_to_count(Dataframe* dataframe);

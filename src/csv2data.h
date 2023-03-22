@@ -33,9 +33,6 @@ int count_row_length(char* file_path);
  * 
  * (i.e. a row formatted .csv)
  * 
- * 
- * 
- *
  * @param file_path // (i.e. /data/test_02/sensor_ouput.csv)
  * @return a Dataframe struct  
  */
