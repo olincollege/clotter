@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
           
           // number of colors to be used
           case 'c':
-              //num_colors = (atoi(optarg));
+              num_colors = (atoi(optarg));
               break;
 
           // type of plot desired by user
@@ -66,6 +66,6 @@ int main(int argc, char *argv[]) {
   
   Dataframe *csvdata = csv2arr(file_path);
   Count c = df_to_count(csvdata);
-  display_count(c,4);
+  display_count(c,num_colors);
   count_free(&c);
 }
